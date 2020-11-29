@@ -1,0 +1,10 @@
+{
+  "short_name": "유퀴즈",
+  "name": "유퀴즈 온 더 영락",
+  "icons": [
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
