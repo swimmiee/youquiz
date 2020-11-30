@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/youquiz/static/css/main.5dc5bd45.chunk.css",
+    "main.css": "/youquiz/static/css/main.342801e1.chunk.css",
     "main.js": "/youquiz/static/js/main.72162aad.chunk.js",
     "main.js.map": "/youquiz/static/js/main.72162aad.chunk.js.map",
     "runtime-main.js": "/youquiz/static/js/runtime-main.b02406de.js",
@@ -8,14 +8,14 @@
     "static/js/2.12da17e6.chunk.js": "/youquiz/static/js/2.12da17e6.chunk.js",
     "static/js/2.12da17e6.chunk.js.map": "/youquiz/static/js/2.12da17e6.chunk.js.map",
     "index.html": "/youquiz/index.html",
-    "static/css/main.5dc5bd45.chunk.css.map": "/youquiz/static/css/main.5dc5bd45.chunk.css.map",
+    "static/css/main.342801e1.chunk.css.map": "/youquiz/static/css/main.342801e1.chunk.css.map",
     "static/js/2.12da17e6.chunk.js.LICENSE.txt": "/youquiz/static/js/2.12da17e6.chunk.js.LICENSE.txt",
     "static/media/index.css": "/youquiz/static/media/NanumPen.64cc4130.otf"
   },
   "entrypoints": [
     "static/js/runtime-main.b02406de.js",
     "static/js/2.12da17e6.chunk.js",
-    "static/css/main.5dc5bd45.chunk.css",
+    "static/css/main.342801e1.chunk.css",
     "static/js/main.72162aad.chunk.js"
   ]
 }
