@@ -1,3 +1,5 @@
+@font-face { font-family: 'NanumPen'; src: url(./fonts/NanumPen.otf) format('truetype'); }
+
 *,
 *:before,
 *:after {
@@ -7,28 +9,10 @@
 }
 html,
 body{
+  padding: 2%;
   height: 100%;
   width: 100%;
 }
 #root{
-    height: 100%;
+    width: 100%;
 }
-
-@media (min-width: 576px) {
-    body{
-        padding: 0 3% 0 3%;
-    }
-}
-
-@media (min-width: 768px) {
-    body{
-        padding: 0 5% 0 5%;
-    }
-}
-
-@media (min-width: 960px) {
-    body{
-        padding: 0 7% 0 7%;
-    }
-}
-  

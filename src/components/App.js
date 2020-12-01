@@ -1,23 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { authService } from '../fbase';
+import { authService, dbService } from '../fbase';
 import AppRouter from './Router'
 
 function App() {
   const [init, setInit] = useState(false);
   const [user, setUser] = useState(null);
+  const [hasAccount, setHasAccount] = useState(false);
+  const [docUserId, setDocUserId] = useState('');
+  const [currentInfo, setCurrentInfo] = useState({currentQuiz:0, showWrongs:false});
   
   useEffect(() => {
-      authService.onAuthStateChanged( u => {
+      authService.onAuthStateChanged( async u => {
         if(u){
-            setUser(u);
+          const userinfo = await dbService.collection('userinfo').where('uid','==',u.uid).get();
+          setHasAccount(Boolean(userinfo.docs.length))
+          try{
+            setUser(userinfo.docs[0].data());
+            setDocUserId(userinfo.docs[0].id);
+          }catch(e){
+            setUser(u)
+          }
         }
         setInit(true);
-      })
+      });
+      dbService.collection('current').doc('current').onSnapshot(data => {
+        setCurrentInfo(data.data())
+      });
     }, [])
+    useEffect(() => {
+      if(!docUserId)
+        return;
+      dbService.collection('userinfo').doc(docUserId).onSnapshot( newUser => {
+        setUser(newUser.data());
+      })
+    },[docUserId])
     
   return (
     <>
-      { init ? <AppRouter isLoggedIn={Boolean(user)} user={user}/> : "로딩중입니다!" }
+      { init ? <AppRouter 
+          isLoggedIn={Boolean(user)} 
+          user={user} 
+          hasAccount={hasAccount} 
+          doc_user_id={docUserId}
+          currentInfo={currentInfo} /> : "로딩중입니다!" }
     </>
   );
 }

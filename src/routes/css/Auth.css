@@ -1,23 +1,17 @@
-
-#auth-form button, #auth-form div{
+#auth-form div{
     width: 100%;
 }
-#auth-form .MuiGrid-container:nth-child(1) .MuiGrid-item:nth-child(1) {
-    height: 30px;
-}
-#auth-form .MuiGrid-container:nth-child(1) .MuiGrid-item:nth-child(1) button {
-    width: auto;
-}
-
-@media (min-width: 576px) {
-    /* #auth-form{
-
-    } */
-}
-
-@media (min-width: 960px) {
+@media (max-width: 960px) {
+    #auth-button,
     #auth-form{
-        width: 600px;
+        position: relative;
+        top:150px;
+    }
+}
+@media (min-width: 960px) {
+    #auth-button,
+    #auth-form{
+        width: 800px;
         margin-top: 20px;
         float: right;
     }
