@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Quiz from '../components/Quiz';
 import { dbService } from '../fbase';
 import SubmitAnswer from '../components/SubmitAnswer'
@@ -7,9 +7,10 @@ import Board from '../components/Board';
 import Wrongs from '../components/Wrongs';
 import { Grid, Button } from '@material-ui/core';
 import './css/Home.css';
+import ChangeAnswer from '../components/ChangeAnswer';
 
 const Home = ({user, doc_user_id, currentInfo}) => {
-    const {isAdmin} = user
+    const {uid, isAdmin} = user
     const {currentQuiz, showAnswer, showWrongs} = currentInfo;
     const [quizs, setQuizs] = useState([]);
     const [isSolved, setIsSolved] = useState(false);
@@ -77,11 +78,14 @@ const Home = ({user, doc_user_id, currentInfo}) => {
     return (
         <>
         <Grid container direction="row" spacing={2} alignItems="stretch">
-            <Grid container item xs={12} md={8} direction="row" spacing="auto">
+            <Grid container item xs={12} md={8} direction="row">
                 <Grid item xs={12}>
                     {
                         quizs.length ?
-                        <Quiz quiz={quizs[currentQuiz]} showAnswer={showAnswer} />
+                        <Quiz 
+                            quizs={quizs}
+                            currentQuiz={currentQuiz}
+                            showAnswer={showAnswer}/> 
                         : <h6>퀴즈를 가져오는 중입니다...</h6>
                     }
                 </Grid>
@@ -108,7 +112,7 @@ const Home = ({user, doc_user_id, currentInfo}) => {
                                                     다음 문제
                                             </Button>
                                         :
-                                            <Link fullWidth to="/draw">
+                                            <Link to="/draw">
                                                 <Button variant="contained" color="primary" fullWidth>
                                                     추첨
                                                 </Button> 
@@ -131,7 +135,7 @@ const Home = ({user, doc_user_id, currentInfo}) => {
                         && (
                             !isSolved ?
                             <SubmitAnswer no={quizs[currentQuiz].no} user={user} doc_user_id={doc_user_id}/>
-                            : <h4 align="center" style={{height: "75px"}}>정답을 제출하셨습니다</h4>
+                            : <ChangeAnswer user={user} no={quizs[currentQuiz].no}/>
                         )}
                 </Grid>
                 <Grid item xs={12}>

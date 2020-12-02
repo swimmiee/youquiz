@@ -16,7 +16,10 @@ const Auth = () => {
     return (
     <>
     <Grid id="auth-button" container direction="row" spacing={1} alignItems="center">
-        <Grid item xs={12} alignItems="center">
+        {/* <Grid item xs={12}>
+            <img src='../img/logo.jpeg' alt="Love Came Down"/>
+        </Grid> */}
+        <Grid item xs={12}>
             <Button variant="outlined" onClick={onGooleClick} fullWidth> <IoLogoGoogle/> &nbsp; 구글아이디로 로그인</Button>
         </Grid>
         { buttonClicked &&

@@ -1,4 +1,6 @@
 @font-face { font-family: 'NanumPen'; src: url(./fonts/NanumPen.otf) format('truetype'); }
+@font-face { font-family: 'GoldSilver'; src: url(./fonts/nanum_goldsilver.ttf) format('truetype'); }
+@font-face { font-family: 'BlackHanSans'; src: url(./fonts/BlackHanSans-Regular.ttf) format('truetype'); }
 
 *,
 *:before,
@@ -7,12 +9,71 @@
   padding: 0;
   box-sizing: border-box;
 }
-html,
+html{
+    height: 100%;
+    width: 100%;
+}
 body{
-  padding: 2%;
   height: 100%;
   width: 100%;
+  /* background-color:rgb(255, 232, 232); */
+  background: linear-gradient(to right bottom, #fff3ed, #f8a6a6);
+  border: 15px solid rgba(0, 0, 0, 0);
+
 }
-#root{
+@media (min-width: 400px) {
+    body{
+        border-width: 20px;
+    }
+}
+@media (min-width: 640px) {
+    body{
+        border-width: 35px;
+    }
+}
+@media (min-width: 960px) {
+    body{
+        border-width: 50px;
+    }
+}
+
+#snow{
+	display: flex;
+    position: absolute;
+    top:0;
+    left: 0;
+	justify-content: space-between;
+	margin: 0;
+	padding: 0;
+    height: 100%;
+    z-index: -100;
+	overflow: hidden;
     width: 100%;
+}
+
+.Snowflake {
+	display: inline-block;
+	/* width: 0.1%; */
+	color: #c03131;
+	opacity: 0;
+	margin: 0;
+	padding: 0;
+	animation: fall 16s linear infinite;
+}
+
+@keyframes fall {
+	0% {
+		opacity: 0;
+	}
+	3% {
+		opacity: 0.9;
+	}
+
+	90% {
+		opacity: 0.9;
+	}
+	100% {
+		transform: translate(0, 97vh);
+		opacity: 0;
+	}
 }

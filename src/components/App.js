@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { authService, dbService } from '../fbase';
-import AppRouter from './Router'
+import AppRouter from './Router';
+import Snow from '../Snow';
+// import { createMuiTheme } from '@material-ui/core/styles';
+// import { ThemeProvider } from '@material-ui/styles';
 
 function App() {
   const [init, setInit] = useState(false);
@@ -21,6 +24,9 @@ function App() {
             setUser(u)
           }
         }
+        else{
+          setUser(null);
+        }
         setInit(true);
       });
       dbService.collection('current').doc('current').onSnapshot(data => {
@@ -35,14 +41,28 @@ function App() {
       })
     },[docUserId])
     
+    // const theme = createMuiTheme({
+    //   typography: {
+    //     fontFamily: 'GoldSilver',
+    //     fontSize: 25,
+    //     fontWeightRegular: 600
+    //   }
+    // });
+    
   return (
     <>
-      { init ? <AppRouter 
-          isLoggedIn={Boolean(user)} 
-          user={user} 
-          hasAccount={hasAccount} 
-          doc_user_id={docUserId}
-          currentInfo={currentInfo} /> : "로딩중입니다!" }
+      {/* <ThemeProvider theme={theme}> */}
+      <div className="App">
+        <Snow>
+        { init ? <AppRouter 
+            isLoggedIn={Boolean(user)} 
+            user={user} 
+            hasAccount={hasAccount} 
+            doc_user_id={docUserId}
+            currentInfo={currentInfo} /> : "로딩중입니다!" }
+        </Snow>
+      </div>
+      {/* </ThemeProvider> */}
     </>
   );
 }

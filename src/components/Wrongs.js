@@ -9,7 +9,9 @@ const Wrongs = ({wrongs, isAdmin, showWrongs}) => {
         })
     }
     return (
-        <Paper id="wrongs" variant="outlined">
+        <>
+        <div className="christmas-striped top"/>
+        <div id="wrongs">
             <Grid container direction="column" spacing={1}>
                 <Grid item container direction="row">
                     <Grid item xs={6}>
@@ -36,8 +38,9 @@ const Wrongs = ({wrongs, isAdmin, showWrongs}) => {
                     </Grid>
                 }
             </Grid>
-            
-        </Paper>
+        </div>
+        <div className="christmas-striped bottom"/>
+        </>
     )
 }
 

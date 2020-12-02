@@ -57,11 +57,6 @@ const Draw = () => {
                     추첨
                 </Paper>
             </Grid>
-            <Grid item xs={12} md={4}>
-                <Paper className="people" variant="elevation" elevation={3}>
-                    <GetPeopleInfoComponent peopleInfo={correcter}/>
-                </Paper>
-            </Grid>
         </Grid>
         
     )

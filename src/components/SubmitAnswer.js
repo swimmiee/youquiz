@@ -10,6 +10,10 @@ const SubmitAnswer = ({no, user, doc_user_id}) => {
         setAnswer(value)
     }
     const onSubmitClicked = async () => {
+        if(answer==''){
+            alert('정답을 제출해주세요.');
+            return;
+        }
         const answerObj = {
             uid,
             name,
@@ -22,7 +26,7 @@ const SubmitAnswer = ({no, user, doc_user_id}) => {
         alert('정답이 제출되었습니다.');
     }
     return(
-        <Paper id="submitAnswer" variant="outlined">
+        <div id="submitAnswer">
             <Grid container direction="row" spacing={2} alignItems="center">
                 <Grid item xs={9}>
                     <FormControl fullWidth>
@@ -37,7 +41,7 @@ const SubmitAnswer = ({no, user, doc_user_id}) => {
                     </Button>
                 </Grid>
             </Grid>
-        </Paper>
+        </div>
     )
 }
 
