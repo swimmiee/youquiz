@@ -3,7 +3,7 @@ import {Paper, Grid, Button, FormControl, Input, InputLabel, FormHelperText} fro
 import { dbService } from '../fbase';
 
 const SubmitAnswer = ({no, user, doc_user_id}) => {
-    const {uid, name} = user;
+    const {uid, name, tel} = user;
     const [answer, setAnswer] = useState('');
     const onInputChange = event => {
         const {target:{value}} = event;
@@ -17,6 +17,7 @@ const SubmitAnswer = ({no, user, doc_user_id}) => {
         const answerObj = {
             uid,
             name,
+            tel,
             answer
         }
         await dbService.collection('quiz_'+no).add(answerObj);

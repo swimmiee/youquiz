@@ -1,10 +1,10 @@
 #quiz{
     font-weight: 100;
     display: grid;
-    grid-template-rows: 19% 16% 50% 18%;
+    grid-template-rows: 15% 12% 57% 15% 1%;
     font-size: 30px;
     background-image:linear-gradient(#ffffff, #ffe9f0);
-    min-height: 210px;
+    min-height: 300px;
     padding: 1%;
     border: none;
     border-radius: 0;
@@ -29,8 +29,6 @@
 .christmas-striped.slim{
     height:7px;
 }
-
-/* #8d012f, #00734a */
 
 #quiz .quiz-timeline{
     font-size: large;
@@ -82,8 +80,11 @@
     }
 }
 @media (min-width: 960px) {
-    #quiz{
+    #quiz *{
         font-family: 'BlackHanSans';
+    }
+    #quiz{
+        line-height: 1em;
         padding: 3%;
         height: 500px;
         font-size: 50px;

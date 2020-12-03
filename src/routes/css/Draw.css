@@ -1,6 +1,30 @@
-.people{
-    height: 880px;
-}
 .draw{
-    height: 300px;
+    background-image:linear-gradient(to right bottom, #ffeaea, #ffc0c0);
+    height: 800px;
+    display: grid;
+    grid-template-rows: 35% 8% 57%;
+}
+.draw-machine,
+.draw-machine .drawer,
+.corgrats-message{
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.draw-machine .draw-btns{
+    width:80%;
+    margin-top: 20px;
+}
+.draw-machine .draw-btns button{
+    width:45%;
+    margin: 2%;
+}
+.draw-machine .drawer{
+    background-color:#fff;
+    width: 80%;
+    height: 70px;
+}
+.drawed-list{
+    padding: 20px;
 }

@@ -8,15 +8,18 @@ import Wrongs from '../components/Wrongs';
 import { Grid, Button } from '@material-ui/core';
 import './css/Home.css';
 import ChangeAnswer from '../components/ChangeAnswer';
+import useSound from 'use-sound';
+import dingdong from '../sound/sound3.mp3';
 
 const Home = ({user, doc_user_id, currentInfo}) => {
-    const {uid, isAdmin} = user
+    const {isAdmin} = user
     const {currentQuiz, showAnswer, showWrongs} = currentInfo;
     const [quizs, setQuizs] = useState([]);
     const [isSolved, setIsSolved] = useState(false);
     const [participants, setParticipants] = useState(0);
     const [corrects, setCorrects] = useState(0);
     const [wrongs, setWrongs] = useState([]);
+    const [play] = useSound(dingdong);
 
     const setCurrentQuiz = ( idx ) => {
         dbService.collection('current').doc('current').update({
@@ -24,6 +27,7 @@ const Home = ({user, doc_user_id, currentInfo}) => {
         })
     }
     const setShowAnswer = (bool) => {
+        // bool && play();
         dbService.collection('current').doc('current').update({
             showAnswer: bool
         })
@@ -74,6 +78,9 @@ const Home = ({user, doc_user_id, currentInfo}) => {
             setWrongs(w);
         })
     }, [quizs, currentQuiz])
+    useEffect( () => {
+        showAnswer && play();
+    }, [showAnswer])
 
     return (
         <>

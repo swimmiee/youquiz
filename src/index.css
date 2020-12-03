@@ -1,7 +1,10 @@
-@font-face { font-family: 'NanumPen'; src: url(./fonts/NanumPen.otf) format('truetype'); }
-@font-face { font-family: 'GoldSilver'; src: url(./fonts/nanum_goldsilver.ttf) format('truetype'); }
+@font-face { font-family: 'AppleGothic'; src: url(./fonts/AppleSDGothicNeoB.ttf) format('truetype'); }
 @font-face { font-family: 'BlackHanSans'; src: url(./fonts/BlackHanSans-Regular.ttf) format('truetype'); }
 
+*{
+    font-family: 'AppleGothic';
+    line-height: 1.15;
+}
 *,
 *:before,
 *:after {
