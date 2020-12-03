@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/youquiz/static/css/main.c51706ae.chunk.css",
-    "main.js": "/youquiz/static/js/main.030c60b2.chunk.js",
-    "main.js.map": "/youquiz/static/js/main.030c60b2.chunk.js.map",
-    "runtime-main.js": "/youquiz/static/js/runtime-main.97cf96d7.js",
-    "runtime-main.js.map": "/youquiz/static/js/runtime-main.97cf96d7.js.map",
-    "static/js/2.7b24d95f.chunk.js": "/youquiz/static/js/2.7b24d95f.chunk.js",
-    "static/js/2.7b24d95f.chunk.js.map": "/youquiz/static/js/2.7b24d95f.chunk.js.map",
-    "static/js/3.36e27f5b.chunk.js": "/youquiz/static/js/3.36e27f5b.chunk.js",
-    "static/js/3.36e27f5b.chunk.js.map": "/youquiz/static/js/3.36e27f5b.chunk.js.map",
+    "main.css": "/youquiz/static/css/main.05f95d13.chunk.css",
+    "main.js": "/youquiz/static/js/main.9895591a.chunk.js",
+    "main.js.map": "/youquiz/static/js/main.9895591a.chunk.js.map",
+    "runtime-main.js": "/youquiz/static/js/runtime-main.f6135415.js",
+    "runtime-main.js.map": "/youquiz/static/js/runtime-main.f6135415.js.map",
+    "static/js/2.bcae3475.chunk.js": "/youquiz/static/js/2.bcae3475.chunk.js",
+    "static/js/2.bcae3475.chunk.js.map": "/youquiz/static/js/2.bcae3475.chunk.js.map",
+    "static/js/3.504f04a2.chunk.js": "/youquiz/static/js/3.504f04a2.chunk.js",
+    "static/js/3.504f04a2.chunk.js.map": "/youquiz/static/js/3.504f04a2.chunk.js.map",
     "index.html": "/youquiz/index.html",
-    "static/css/main.c51706ae.chunk.css.map": "/youquiz/static/css/main.c51706ae.chunk.css.map",
-    "static/js/2.7b24d95f.chunk.js.LICENSE.txt": "/youquiz/static/js/2.7b24d95f.chunk.js.LICENSE.txt",
-    "static/js/3.36e27f5b.chunk.js.LICENSE.txt": "/youquiz/static/js/3.36e27f5b.chunk.js.LICENSE.txt",
+    "static/css/main.05f95d13.chunk.css.map": "/youquiz/static/css/main.05f95d13.chunk.css.map",
+    "static/js/2.bcae3475.chunk.js.LICENSE.txt": "/youquiz/static/js/2.bcae3475.chunk.js.LICENSE.txt",
+    "static/js/3.504f04a2.chunk.js.LICENSE.txt": "/youquiz/static/js/3.504f04a2.chunk.js.LICENSE.txt",
     "static/media/index.css": "/youquiz/static/media/BlackHanSans-Regular.9d66f2b3.ttf",
     "static/media/sound3.aceb025f.mp3": "/youquiz/static/media/sound3.aceb025f.mp3"
   },
   "entrypoints": [
-    "static/js/runtime-main.97cf96d7.js",
-    "static/js/2.7b24d95f.chunk.js",
-    "static/css/main.c51706ae.chunk.css",
-    "static/js/main.030c60b2.chunk.js"
+    "static/js/runtime-main.f6135415.js",
+    "static/js/2.bcae3475.chunk.js",
+    "static/css/main.05f95d13.chunk.css",
+    "static/js/main.9895591a.chunk.js"
   ]
 }
