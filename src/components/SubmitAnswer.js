@@ -11,7 +11,7 @@ const SubmitAnswer = ({no, user, doc_user_id}) => {
     }
     const onSubmitClicked = async () => {
         if(answer==''){
-            alert('정답을 제출해주세요.');
+            alert('정답을 입력해주세요.');
             return;
         }
         const answerObj = {
@@ -21,10 +21,10 @@ const SubmitAnswer = ({no, user, doc_user_id}) => {
             answer
         }
         await dbService.collection('quiz_'+no).add(answerObj);
+        alert('정답이 제출되었습니다.');
         await dbService.collection('userinfo').doc(doc_user_id).update({
             ['quiz_'+no]: true
         })
-        alert('정답이 제출되었습니다.');
     }
     return(
         <div id="submitAnswer">
@@ -33,7 +33,6 @@ const SubmitAnswer = ({no, user, doc_user_id}) => {
                     <FormControl fullWidth>
                         <InputLabel htmlFor="ans-input">정답</InputLabel>
                         <Input id="ans-input" type="text" aria-describedby="ans-helper" name="answer" onChange={onInputChange} value={answer}/>
-                        <FormHelperText id="ans-helper"> 제출 후에는 변경할 수 없습니다!</FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item xs={3}>

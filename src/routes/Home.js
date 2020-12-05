@@ -7,14 +7,16 @@ import Board from '../components/Board';
 import Wrongs from '../components/Wrongs';
 import { Grid, Button } from '@material-ui/core';
 import './css/Home.css';
+import {IoPlaySharp} from 'react-icons/io5';
 import ChangeAnswer from '../components/ChangeAnswer';
 import useSound from 'use-sound';
 import dingdong from '../sound/sound3.mp3';
+import qrcode from '../img/qrcode.png';
+import quizs from '../quizs';
 
 const Home = ({user, doc_user_id, currentInfo}) => {
     const {isAdmin} = user
-    const {currentQuiz, showAnswer, showWrongs} = currentInfo;
-    const [quizs, setQuizs] = useState([]);
+    const {currentQuiz, showAnswer, showWrongs, isStarted} = currentInfo;
     const [isSolved, setIsSolved] = useState(false);
     const [participants, setParticipants] = useState(0);
     const [corrects, setCorrects] = useState(0);
@@ -27,7 +29,6 @@ const Home = ({user, doc_user_id, currentInfo}) => {
         })
     }
     const setShowAnswer = (bool) => {
-        // bool && play();
         dbService.collection('current').doc('current').update({
             showAnswer: bool
         })
@@ -51,50 +52,77 @@ const Home = ({user, doc_user_id, currentInfo}) => {
             return;
         setIsSolved(user['quiz_'+quizs[currentQuiz].no]);
     }
+    const onStartQuizClicked = () => {
+        dbService.collection('current').doc('current').update({
+            currentQuiz: 0,
+            isStarted: true,
+            showAnswer: false,
+            showWrongs: false
+        })
+    } 
     const isCorrectAnswer = (answer, correctAnswerArr) => correctAnswerArr.includes(answer);
 
-    useEffect( async () => {
-        const quizData = await dbService.collection('quiz').orderBy('no').get();
-        setQuizs(quizData.docs.map(doc => doc.data()));
-    }, [])
     useEffect( () => {
         checkSolved()
     }, [quizs, currentQuiz, user])
     useEffect( async () => {
-        if(!quizs.length)
-            return;
-        const currentQuizNo = quizs[currentQuiz].no;
-        const correctAnswerArr = (await dbService.collection('quiz').where('no','==',currentQuizNo).get()).docs[0].data().answer;
-        dbService.collection("quiz_"+currentQuizNo).onSnapshot( snapshot => {
-            const answers = snapshot.docs.map( doc => doc.data() );
-            setParticipants(answers.length);
+        const {no, answers} = quizs[currentQuiz];
+        dbService.collection("quiz_"+no).onSnapshot( snapshot => {
+            const peopleAnswers = snapshot.docs.map( doc => doc.data() );
+            setParticipants(peopleAnswers.length);
             let c = [], w = [];
-            answers.map( a => {
-                isCorrectAnswer(a.answer, correctAnswerArr) ? 
-                      c = [...c, a]
-                    : w = [...w, a]
+            peopleAnswers.map( person => {
+                isCorrectAnswer(person.answer, answers) ? 
+                      c = [...c, person]
+                    : w = [...w, person]
             })
             setCorrects(c.length);
             setWrongs(w);
         })
-    }, [quizs, currentQuiz])
+    }, [currentQuiz])
     useEffect( () => {
         showAnswer && play();
     }, [showAnswer])
 
+    if(!isStarted)
+        return (
+            <Grid id="ready" container direction="row">
+                <Grid container item xs={12} md={6} spacing={2}>
+                    <Grid item xs={12}>
+                        <h1>
+                            곧 [RE퀴즈 인 영락]이 시작됩니다!
+                            <br/>
+                            {isAdmin && "아직 접속하지 못한 분들은 QR코드를 통해 접속해주세요!"}
+                        </h1>
+                    </Grid>
+                    {isAdmin &&
+                        <Grid container item xs={12} spacing={2} justify="center">
+                            <img src={qrcode} alt="QR code"/>
+                        </Grid>
+                    }
+                </Grid>
+                { isAdmin &&
+                    <Grid container item xs={12} md={6} alignItems="center" justify="center" spacing={4}>
+                        <Button variant="contained"
+                            color="primary" 
+                            onClick={onStartQuizClicked}
+                            fullWidth
+                            style={{height:"100px"}}>
+                                <IoPlaySharp size="30"/>&nbsp;<h1>Start</h1>
+                        </Button>
+                    </Grid>
+                }
+            </Grid>
+        )
     return (
         <>
         <Grid container direction="row" spacing={2} alignItems="stretch">
             <Grid container item xs={12} md={8} direction="row">
                 <Grid item xs={12}>
-                    {
-                        quizs.length ?
                         <Quiz 
                             quizs={quizs}
                             currentQuiz={currentQuiz}
                             showAnswer={showAnswer}/> 
-                        : <h6>퀴즈를 가져오는 중입니다...</h6>
-                    }
                 </Grid>
 
                 { isAdmin &&

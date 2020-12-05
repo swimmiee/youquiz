@@ -1,8 +1,11 @@
+#ready img{
+    width: 90%;
+    height: auto;
+}
+
 #quiz{
-    font-weight: 100;
     display: grid;
-    grid-template-rows: 15% 12% 57% 15% 1%;
-    font-size: 30px;
+    grid-template-rows: 10% 10% auto 13% 1%;
     background-image:linear-gradient(#ffffff, #ffe9f0);
     min-height: 300px;
     padding: 1%;
@@ -68,7 +71,11 @@
     top:30%;
 }
 @media (max-width: 960px) {
-    #quiz{
+    #quiz .title,
+    #quiz .question,
+    #quiz .answer,
+    #quiz u{
+        font-size: 20px;
         font-weight: 700;
         padding: 1%;
     }
@@ -76,12 +83,16 @@
         min-height: 200px;
     }
     .loader{
-        bottom: -2px
+        bottom: -2px;
     }
 }
 @media (min-width: 960px) {
-    #quiz *{
+    #quiz .title,
+    #quiz .question,
+    #quiz .answer,
+    #quiz u{
         font-family: 'BlackHanSans';
+        font-size: 35px;
     }
     #quiz{
         line-height: 1em;
@@ -93,7 +104,7 @@
         min-height: 97%;
     }
     .loader{
-        bottom: 5px;
+        bottom: -1px;
     }
 }
 #admin-button-box{
@@ -108,7 +119,7 @@
     width: 100%;
     padding: 7px 0 7px 0;
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 70% 30%;
 }
 .already-submit-message .my-answer{
     display: table;

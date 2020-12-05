@@ -200,7 +200,8 @@ const Draw = () => {
                 <div className="draw">
                     <div className="draw-machine">
                         <Paper className="drawer" variant="elevation" elevation={3}>
-                            {currentDrawer}
+                            <h2>{currentDrawer}</h2>
+                            {/* className={isDrawingFinished && "finished"} */}
                         </Paper>
                         <div className="draw-btns">
                             { isDrew  ?

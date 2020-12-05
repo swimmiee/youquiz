@@ -1,6 +1,6 @@
 import React from 'react';
 const Snow = ({children}) => {
-    const maxFontSize=8;
+    const maxFontSize=20;
     let arr = new Array(200).fill(0)
 
     const Snowflake = ({id, style}) =>{

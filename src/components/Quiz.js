@@ -1,9 +1,8 @@
 import React from 'react';
 import { Paper, Stepper, Step, StepLabel } from '@material-ui/core';
-import { IoBagCheckSharp, IoBagCheckOutline } from 'react-icons/io5'
 
 const Quiz = ({quizs, currentQuiz, showAnswer}) => {
-    const {no, question, answer} = quizs[currentQuiz];
+    const {no, question, answers} = quizs[currentQuiz];
     const stepStyle={
         stepper:{
             padding:"1%",
@@ -28,7 +27,7 @@ const Quiz = ({quizs, currentQuiz, showAnswer}) => {
             <div className="question" dangerouslySetInnerHTML={ {__html: question}}></div>
             <div className="answer">
                 정답 : &nbsp;
-                { showAnswer ? answer[0] : <><span className="loader"></span>&nbsp;&nbsp;</>}
+                { showAnswer ? answers[0] : <><span className="loader"></span>&nbsp;&nbsp;</>}
             </div>
         </Paper>
         <div className="christmas-striped bottom"></div>
