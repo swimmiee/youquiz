@@ -1,8 +1,29 @@
-#ready img{
-    width: 90%;
-    height: auto;
+#ready{
+    height: 100%;
 }
+#ready .ready-left > *{
+    width: 100%;
+}
+#ready .ready-left .welcome{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#ready img{
+    width: 80%;
+    margin: 0 10% 10% 10%;
+    height: auto;
 
+}
+#ready h2{
+    width: 100%;
+    font-family: 'BlackHanSans';
+    font-weight: 100;
+    text-align: center;
+    color: #267424;
+    text-shadow: #0b290a 0 -2px;
+}
 #quiz{
     display: grid;
     grid-template-rows: 10% 10% auto 13% 1%;
@@ -20,7 +41,7 @@
     background-image: linear-gradient(
         -50deg,var(--ch-red) 25%, var(--ch-green) 25%, 
         var(--ch-green) 50%,var(--ch-red) 50%,
-        var(--ch-red) 75%, var(--ch-green) 75%, #00734a 100%);
+        var(--ch-red) 75%, var(--ch-green) 75%,var(--ch-green) 100%);
     background-size: 56.57px 56.57px;
 }
 .christmas-striped.top{
@@ -71,6 +92,17 @@
     top:30%;
 }
 @media (max-width: 960px) {
+    #ready{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .ready-left,
+    .ready-right{
+        width: 100%;
+    }
     #quiz .title,
     #quiz .question,
     #quiz .answer,
@@ -87,6 +119,21 @@
     }
 }
 @media (min-width: 960px) {
+    #ready{
+        display: flex;
+        flex-direction: row;
+    }
+    #ready h2{
+        font-size: 38px;
+    }
+    .ready-left,
+    .ready-right{
+        width: 50%;
+    }
+    .ready-right{
+        display: flex;
+        align-items: center;
+    }
     #quiz .title,
     #quiz .question,
     #quiz .answer,

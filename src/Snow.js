@@ -4,7 +4,7 @@ const Snow = ({children}) => {
     let arr = new Array(200).fill(0)
 
     const Snowflake = ({id, style}) =>{
-        const flake='*';
+        const flake='٭';
         return(
           <p className='Snowflake' id={`item${id}`} style={style}>
             {flake}

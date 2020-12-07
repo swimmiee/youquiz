@@ -1,249 +1,167 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, Grid, Button, AppBar, Tabs, Tab, Table, 
-    TableContainer, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
+import quizs from '../quizs';
+import Navtab from '../components/Navtab';
+import GetTable from '../components/GetTable';
+import { Grid, Button } from '@material-ui/core';
 import {IoRefresh} from 'react-icons/io5';
 import './css/Draw.css';
 import { dbService } from '../fbase';
+import ResultTable from '../components/ReaultTable';
 
 const Draw = () => {
     const [init, setInit] = useState(false);
-    const [quizNos, setQuizNos] = useState([])
-    const [quizCorrectorInfos, setQuizCorrectorInfos] = useState([]);
-    const [value, setValue]= useState(0);
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-      };
+    const [drawingTabIdx, setDrawingTabIdx] = useState(0);
+    const [isDrawingCorrector, setIsDrawingCorrector] = useState(0);
+    const [isDrawingFinished, setIsDrawingFinished] = useState(false);
+    const [isDrawable, setIsDrawable] = useState(true);
+    const [correctorInfos, setCorrectorInfos] = useState([]);
+    const [participantInfos, setParticipantInfos] = useState([]);
     
-
-    const useDrawMachine = () => {
-        const initialDrawer = "번 문제의 당첨자는 누구일까요?";
-        const [currentDrawQuiz, setCurrentDrawQuiz] = useState(0)
-        const [currentDrawer, setCurrentDrawer] = useState(1+initialDrawer);
-        const [drewList, setDrewList] = useState([]);
-        const [isDrawingFinished, setIsDrawingFinished] = useState(false);
-        const [isDrew, setIsDrew] = useState(false);
-        const rand = (start, end) => Math.floor((Math.random() * (end-start+1)) + start);
-        const drawing = async (list, repetitions) => {
-            let x = 0;
-            let intervalID;
-            intervalID = setInterval(() => {
-                new Promise((resolve, reject) => {
-                    resolve('')
-                }).then( () => {
-                    const display = `${list[rand(0,list.length-1)].name}`;
-                    setCurrentDrawer(display);
-                    if (++x == repetitions){
-                        clearInterval(intervalID);
-                        setTimeout(()=> setIsDrawingFinished(true), 500);
-                    }
-                })
-            }, 100);
-        }
-
-        const draw = async () => {
-            setIsDrawingFinished(false);
-            const peopleList = quizCorrectorInfos[currentDrawQuiz];
-            if(!(peopleList.length))
-                return;
-            await drawing(peopleList, 20)
-            setIsDrew(true)
-        }
-        const initiateDrawMachine = (currentQuiz) => {
-            setCurrentDrawer((currentQuiz+1)+initialDrawer);
-            setCurrentDrawQuiz(currentQuiz);
-            setIsDrawingFinished(false);
-            setIsDrew(false);
-        }
-        const updateDrewList = (num, winner) => setDrewList( 
-            prev => [...prev.filter(([no, name]) => no!==num),
-                     [num, winner]]
-        )
-        return [currentDrawer, currentDrawQuiz, isDrawingFinished, isDrew, draw, initiateDrawMachine, drewList, updateDrewList];
-    }
-    const [currentDrawer, currentDrawQuiz, isDrawingFinished,isDrew, draw, initiateDrawMachine, drewList, updateDrewList] = useDrawMachine();
-    
-    const isCorrectAnswer = (answer, correctAnswerArr) => correctAnswerArr.includes(answer);
-   
-    // 퀴즈별 정답자 데이터 가져오기
-    useEffect(async ()=>{
-        const quizData = await dbService.collection('quiz').orderBy('no').get();
-        const dbQuizs = quizData.docs.map(doc => doc.data());
-        setQuizNos(dbQuizs.map(q => q.no).sort());
-        
-        let correctorInfos =[];
-        await Promise.all( dbQuizs.map( async (quiz) => {
-            const {no, answer} = quiz;
-            const participantsObj = (await dbService.collection("quiz_"+no).get())
-                                    .docs.map( doc => doc.data());
-            correctorInfos=[...correctorInfos, participantsObj.filter( p => isCorrectAnswer( p.answer, answer ))];
-        }))
-        setQuizCorrectorInfos(correctorInfos);
-        setInit(true)
-    },[])
-    const hideName = name => {
-        if(name =="" || !name)
-            return "익명"
-        else if(name.length ==1)
-            return name
-        else if(name.length==2)
-            return name[0]+'*';
-        else if(name.length==3)
-            return name[0]+'*'+name[2];
-        else
-            return name[0]+'**'+name[name.length-1];
-    }
+    const tabnames = [...quizs.map(q => `Quiz ${q.no}`), "참여자"];
     const hideTel = tel => {
-        if(tel =="" || !tel)
+        if(tel ==="" || !tel)
             return "-"
         else if(tel.length <=4)
             return tel
         else
             return '***-****-'+tel.slice(-4);
     }
+    const isCorrectAnswer = (answer, correctAnswerArr) => correctAnswerArr.includes(answer.toLowerCase());
+    // 퀴즈별 정답자 및 전체 참여자 데이터 가져오기
+    useEffect( async ()=>{
+        let dbCors =[];
+        await Promise.all( quizs.map( async (quiz) => {
+            const {no, answers} = quiz;
+            const participantsObj = (await dbService.collection("quiz_"+no).get())
+                                    .docs.map( doc => doc.data());
+            dbCors=[...dbCors, participantsObj
+                                .filter( p => isCorrectAnswer( p.answer, answers ))
+                                .map( p => [p.name, p.tel])];
+        }))
+        let part = [];
+        (await dbService.collection('userinfo').get())
+            .docs.map( doc => doc.data())
+            .map( p => {
+                part = [...part, [p.name, p.tel]];
+            })
+        setCorrectorInfos(dbCors);
+        setParticipantInfos(part);
+        setInit(true)
+    },[])
 
-    const TabPanel = ({ children, value, index, ...other }) => {
-        return (
-          <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`scrollable-auto-tabpanel-${index}`}
-            aria-labelledby={`scrollable-auto-tab-${index}`}
-            {...other}
-          >
-            {value == index && children }
-          </div>
-        );
+    const rand = (start, end) => Math.floor((Math.random() * (end-start+1)) + start);
+    const hasPerson = (peopleArr, person) => (
+        peopleArr.some( p => p[0]==person[0] && p[1] == person[1])
+    );
+    
+    const initiateDrawMachine = () => {
+        isDrawingCorrector === 0 ?
+            setIsDrawingCorrector(1)
+            : setIsDrawable(false);
+        setIsDrawingFinished(false);
     }
-    const a11yProps = index =>({
-        id: `scrollable-auto-tab-${index}`,
-        'aria-controls': `scrollable-auto-tabpanel-${index}`,
-      })
-     
-    const GetTable = ({title, content, onBlankAltText}) => (
-        <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-            { content.length ?
-                    <>
-                    <TableHead>
-                        <TableRow>
-                            {
-                                title.map( (t, idx) => <TableCell key={idx} align="center"> {t} </TableCell>)
-                            }
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {content.map((row, idx) => (
-                            <TableRow key={idx}>
-                                { row.map( (c, idx) => (
-                                        <TableCell key={idx} component="th" scope="row" align="center">{c}</TableCell>
-                                ))}
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                    </>
-                :
-                    <TableBody>
-                        <TableRow>
-                            <TableCell align="center">{onBlankAltText}</TableCell>
-                        </TableRow>
-                    </TableBody>
-                }
-            </Table>
-        </TableContainer>
-    )
-    const GetPeopleInfoComponent = ({peopleInfo}) => {
-        const title = ["이름", "전화번호"];
-        const content = peopleInfo.map( p => [p.name, hideTel(p.tel)]);
-        return GetTable({
-            title, 
-            content, 
-            onBlankAltText:"정답자가 없습니다 ㅠㅠㅠㅠ"});  
+    const draw = async (curr) => {
+        // 정답자
+        let winners=[];
+        const type = curr === 0 ? 'corrector' : 'participant';
+        if(!curr){
+            correctorInfos.map( (quizCorrectors, idx) => {
+                let winner;
+                do {
+                    winner = quizCorrectors[rand(0, quizCorrectors.length-1)];
+                } while (hasPerson(winners, winner));
+                winners=[...winners, winner];
+            })
+        }
+        //참여자 전체
+        else{
+            // const corWinners = Object.values((await dbService.collection('current').doc('corrector').get()).data());
+            for(let i=0; i<10; i++){
+                let winner;
+                do {
+                    winner = participantInfos[rand(0, participantInfos.length-1)];
+                } while (hasPerson(winners, winner));
+                // } while (hasPerson([...corWinners,...winners], winner));
+                winners=[...winners, winner];
+            }
+        }
+        await new Promise((resolve, reject) => {
+            resolve('');
+        }).then(() => {
+            winners.map( async (w, idx) => {
+                setTimeout( () => {
+                    const no =parseInt(idx)+1;
+                    dbService.collection("current").doc(type).update({
+                        [no]: w
+                    });
+                }, 500+1000*idx)
+                
+            })
+        }).then( () => {
+            setTimeout(() => setIsDrawingFinished(true), 500+winners.length*1000)
+        })
+        
     }
-
-    return (
-        <Grid container direction="row" spacing={2} alignItems="flex-start">
-            <Grid container item xs={12} md={6} spacing={1}>
-                <Grid item xs={12}>
-                {
-                    init ? 
-                    <>
-                    <AppBar position="static" color="default">
-                        <Tabs
-                            value={currentDrawQuiz}
-                            onChange={handleChange}
-                            indicatorColor="primary"
-                            textColor="primary"
-                            variant="scrollable"
-                            scrollButtons="auto"
-                            aria-label="scrollable auto tabs">
-                            {
-                                quizNos.map( (no, idx) => 
-                                    <Tab key={idx} label={`Quiz ${no}`}  {...a11yProps(idx)} />
-                                )
-                            }
-                        </Tabs>
-                    </AppBar>
+    
+    return(
+        <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+                <Navtab tabnames={tabnames} tabIdx={drawingTabIdx} tabController={setDrawingTabIdx}>
                     {
-                        quizNos.map((no, idx) => (
-                            <TabPanel key={idx} value={currentDrawQuiz} index={idx}>
-                                <GetPeopleInfoComponent peopleInfo={quizCorrectorInfos[idx]}/>
-                            </TabPanel>
+                        [...correctorInfos, participantInfos].map( (c, idx) => (
+                            <GetTable 
+                                key={idx}
+                                title={["이름", "전화번호"]}
+                                content={c.map( (([name, tel]) => [name, hideTel(tel)]))}
+                                onBlankAltText={idx===correctorInfos.length ? "참여자가 없습니다." : "정답자가 없습니다."}/>
                         ))
                     }
-                    </>
-                    : "정답자 데이터를 가져오는 중입니다..."
-                }
-                </Grid>
+                </Navtab>
             </Grid>
             <Grid item xs={12} md={6}>
                 <div className="christmas-striped top"/>
                 <div className="draw">
-                    <div className="draw-machine">
-                        <Paper className="drawer" variant="elevation" elevation={3}>
-                            <h2>{currentDrawer}</h2>
-                            {/* className={isDrawingFinished && "finished"} */}
-                        </Paper>
-                        <div className="draw-btns">
-                            { isDrew  ?
+                    <Grid container alignContent="center" spacing={1} className="draw-machine">
+                        <Grid item xs={12}>
+                            <Button 
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                                disabled={!isDrawable}
+                                onClick={ () => draw(isDrawingCorrector)}>
+                                    {!isDrawingCorrector ? 
+                                        "정답자 6인 추첨" : "참여자 10인 추첨"}
+                            </Button>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={6}>
                                 <Button 
-                                    onClick={draw} 
-                                    variant="contained" 
-                                    color="secondary"
-                                    disabled={!isDrawingFinished}
-                                    >
-                                    <IoRefresh size="18"/>
+                                variant="contained"
+                                disabled={!isDrawingFinished}
+                                fullWidth
+                                color="secondary"
+                                onClick={ () => {
+                                    setIsDrawingFinished(false);
+                                    draw(isDrawingCorrector)
+                                }}>
+                                    <IoRefresh size="16"/>
                                 </Button>
-                                :
-                                <Button/>
-                                }
-                            {isDrew ?
+                            </Grid>
+                            <Grid item xs={6}>
                                 <Button 
-                                    onClick={()=>{
-                                        currentDrawQuiz<(quizNos.length-1) && initiateDrawMachine(currentDrawQuiz+1);
-                                        updateDrewList(currentDrawQuiz+1, currentDrawer);
-                                    }} 
-                                    variant="contained" 
+                                    variant="contained"
                                     disabled={!isDrawingFinished}
-                                    color="primary">
-                                    {currentDrawQuiz<quizNos.length-1 ? "다음 추첨" : "확인"}
+                                    fullWidth
+                                    color="default"
+                                    onClick={initiateDrawMachine}>
+                                        {!isDrawingCorrector ? 
+                                        "다음 추첨" : "확인"}
                                 </Button>
-                            :
-                                <Button onClick={draw} variant="contained" color="primary">
-                                    추첨
-                                </Button>
-                            }
-                        </div>
-                    </div>
-                    <div className="congrats-message">
-                        <h2 align="center">{isDrawingFinished && `${currentDrawer}님, 당첨을 축하드립니다!`}</h2>
-                    </div>
-                    <div className="drawed-list">
-                        <GetTable 
-                            title={["퀴즈", "당첨자"]}
-                            content={drewList}
-                            onBlankAltText="첫 당첨자를 곧 추첨합니다!"
-                            />
-                    </div>
+                            </Grid>
+                        </Grid>
+                        
+                    </Grid>
+                    <ResultTable tabIdx={isDrawingCorrector} tabController={setIsDrawingCorrector}/>
                 </div>
                 <div className="christmas-striped bottom"/>
             </Grid>

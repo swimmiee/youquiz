@@ -70,7 +70,7 @@ const Auth = () => {
         }
         { buttonClicked &&
             <Grid item xs={12}>
-                <h2>잠시 기다려주세요...</h2>
+                <h5>잠시 기다려주세요...</h5>
             </Grid>
         }
     </Grid>
