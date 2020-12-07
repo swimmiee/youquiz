@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/youquiz/static/css/main.7cd8d9a2.chunk.css",
-    "main.js": "/youquiz/static/js/main.653b8f34.chunk.js",
-    "main.js.map": "/youquiz/static/js/main.653b8f34.chunk.js.map",
+    "main.js": "/youquiz/static/js/main.851b6afe.chunk.js",
+    "main.js.map": "/youquiz/static/js/main.851b6afe.chunk.js.map",
     "runtime-main.js": "/youquiz/static/js/runtime-main.ff0c9060.js",
     "runtime-main.js.map": "/youquiz/static/js/runtime-main.ff0c9060.js.map",
-    "static/js/2.a9373ef2.chunk.js": "/youquiz/static/js/2.a9373ef2.chunk.js",
-    "static/js/2.a9373ef2.chunk.js.map": "/youquiz/static/js/2.a9373ef2.chunk.js.map",
+    "static/js/2.9efff349.chunk.js": "/youquiz/static/js/2.9efff349.chunk.js",
+    "static/js/2.9efff349.chunk.js.map": "/youquiz/static/js/2.9efff349.chunk.js.map",
     "static/js/3.4ee11575.chunk.js": "/youquiz/static/js/3.4ee11575.chunk.js",
     "static/js/3.4ee11575.chunk.js.map": "/youquiz/static/js/3.4ee11575.chunk.js.map",
     "index.html": "/youquiz/index.html",
     "static/css/main.7cd8d9a2.chunk.css.map": "/youquiz/static/css/main.7cd8d9a2.chunk.css.map",
-    "static/js/2.a9373ef2.chunk.js.LICENSE.txt": "/youquiz/static/js/2.a9373ef2.chunk.js.LICENSE.txt",
+    "static/js/2.9efff349.chunk.js.LICENSE.txt": "/youquiz/static/js/2.9efff349.chunk.js.LICENSE.txt",
     "static/js/3.4ee11575.chunk.js.LICENSE.txt": "/youquiz/static/js/3.4ee11575.chunk.js.LICENSE.txt",
     "static/media/index.css": "/youquiz/static/media/BlackHanSans-Regular.9d66f2b3.ttf",
     "static/media/logo.86da540d.png": "/youquiz/static/media/logo.86da540d.png",
@@ -19,8 +19,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.ff0c9060.js",
-    "static/js/2.a9373ef2.chunk.js",
+    "static/js/2.9efff349.chunk.js",
     "static/css/main.7cd8d9a2.chunk.css",
-    "static/js/main.653b8f34.chunk.js"
+    "static/js/main.851b6afe.chunk.js"
   ]
 }
