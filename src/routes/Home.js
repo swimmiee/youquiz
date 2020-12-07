@@ -91,15 +91,16 @@ const Home = ({user, doc_user_id, currentInfo}) => {
                             showAnswer={showAnswer}/> 
                 </Grid>
 
-                { isAdmin &&
-                    <Grid id="admin-button-box" container item xs={12} direction="row" justify="flex-end" alignItems="center">
+                <Grid id="admin-button-box" container item xs={12} direction="row" justify="flex-end" alignItems="center">
+                    { isAdmin ?
+                        <>
                         { currentQuiz > 0 && 
                             <Grid item xs={6} md={3}>
                                 <Button variant="contained"
-                                 color="primary" 
-                                 fullWidth 
-                                 onClick={onPrevQuizClicked}>
-                                     이전 문제
+                                    color="primary" 
+                                    fullWidth 
+                                    onClick={onPrevQuizClicked}>
+                                        이전 문제
                                 </Button>
                             </Grid>
                         }
@@ -127,8 +128,17 @@ const Home = ({user, doc_user_id, currentInfo}) => {
                                     </Button>
                             }
                         </Grid>
-                    </Grid>
-                }
+                        </>
+                        :
+                        <Grid item xs={12} md={6}>
+                            <Link to="/showresult">
+                                <Button variant="contained" color="primary" fullWidth>
+                                    추첨 결과 확인
+                                </Button>
+                            </Link>
+                        </Grid>
+                    }
+                </Grid>
 
                 <Grid item xs={12}>
                     {quizs.length 

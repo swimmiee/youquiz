@@ -25,7 +25,7 @@ const ResultTable = ({tabIdx, tabController}) => {
             <GetTable 
                 title={["퀴즈", "당첨자"]}
                 content={correctorWinner}
-                onBlankAltText="첫 당첨자를 곧 추첨합니다!"
+                onBlankAltText="당첨자를 곧 추첨합니다!"
                 />
             <GetTable 
                 title={["번호", "당첨자"]}

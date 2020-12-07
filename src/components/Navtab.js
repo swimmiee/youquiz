@@ -45,8 +45,7 @@ const useStyles = makeStyles((theme) => ({
 export const Navtab = ({tabnames, children, tabIdx, tabController}) => {
   const classes = useStyles();
   let [value, setValue] = useState(0);
-  if(tabIdx && tabController)
-    [value, setValue] = [tabIdx, tabController];
+  (tabIdx && tabController) && ([value, setValue] = [tabIdx, tabController]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
