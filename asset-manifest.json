@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/youquiz/static/css/main.d66ff2e2.chunk.css",
-    "main.js": "/youquiz/static/js/main.a0e33407.chunk.js",
-    "main.js.map": "/youquiz/static/js/main.a0e33407.chunk.js.map",
-    "runtime-main.js": "/youquiz/static/js/runtime-main.ff0c9060.js",
-    "runtime-main.js.map": "/youquiz/static/js/runtime-main.ff0c9060.js.map",
-    "static/js/2.2a84c6c8.chunk.js": "/youquiz/static/js/2.2a84c6c8.chunk.js",
-    "static/js/2.2a84c6c8.chunk.js.map": "/youquiz/static/js/2.2a84c6c8.chunk.js.map",
-    "static/js/3.4ee11575.chunk.js": "/youquiz/static/js/3.4ee11575.chunk.js",
-    "static/js/3.4ee11575.chunk.js.map": "/youquiz/static/js/3.4ee11575.chunk.js.map",
+    "main.css": "/youquiz/static/css/main.96d96213.chunk.css",
+    "main.js": "/youquiz/static/js/main.926d3565.chunk.js",
+    "main.js.map": "/youquiz/static/js/main.926d3565.chunk.js.map",
+    "runtime-main.js": "/youquiz/static/js/runtime-main.f3be8363.js",
+    "runtime-main.js.map": "/youquiz/static/js/runtime-main.f3be8363.js.map",
+    "static/js/2.9d4f9fc1.chunk.js": "/youquiz/static/js/2.9d4f9fc1.chunk.js",
+    "static/js/2.9d4f9fc1.chunk.js.map": "/youquiz/static/js/2.9d4f9fc1.chunk.js.map",
+    "static/js/3.cdfdc9b6.chunk.js": "/youquiz/static/js/3.cdfdc9b6.chunk.js",
+    "static/js/3.cdfdc9b6.chunk.js.map": "/youquiz/static/js/3.cdfdc9b6.chunk.js.map",
     "index.html": "/youquiz/index.html",
-    "static/css/main.d66ff2e2.chunk.css.map": "/youquiz/static/css/main.d66ff2e2.chunk.css.map",
-    "static/js/2.2a84c6c8.chunk.js.LICENSE.txt": "/youquiz/static/js/2.2a84c6c8.chunk.js.LICENSE.txt",
-    "static/js/3.4ee11575.chunk.js.LICENSE.txt": "/youquiz/static/js/3.4ee11575.chunk.js.LICENSE.txt",
+    "static/css/main.96d96213.chunk.css.map": "/youquiz/static/css/main.96d96213.chunk.css.map",
+    "static/js/2.9d4f9fc1.chunk.js.LICENSE.txt": "/youquiz/static/js/2.9d4f9fc1.chunk.js.LICENSE.txt",
+    "static/js/3.cdfdc9b6.chunk.js.LICENSE.txt": "/youquiz/static/js/3.cdfdc9b6.chunk.js.LICENSE.txt",
     "static/media/index.css": "/youquiz/static/media/BlackHanSans-Regular.9d66f2b3.ttf",
     "static/media/logo.86da540d.png": "/youquiz/static/media/logo.86da540d.png",
     "static/media/sound3.aceb025f.mp3": "/youquiz/static/media/sound3.aceb025f.mp3"
   },
   "entrypoints": [
-    "static/js/runtime-main.ff0c9060.js",
-    "static/js/2.2a84c6c8.chunk.js",
-    "static/css/main.d66ff2e2.chunk.css",
-    "static/js/main.a0e33407.chunk.js"
+    "static/js/runtime-main.f3be8363.js",
+    "static/js/2.9d4f9fc1.chunk.js",
+    "static/css/main.96d96213.chunk.css",
+    "static/js/main.926d3565.chunk.js"
   ]
 }
