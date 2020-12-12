@@ -9,6 +9,7 @@ function App() {
   const [hasAccount, setHasAccount] = useState(false);
   const [docUserId, setDocUserId] = useState('');
   const [currentInfo, setCurrentInfo] = useState({currentQuiz:0, showWrongs:false, showAnswer:false});
+  const [goals, setGoals] = useState({users:0, goal:100, score:0});
   
   useEffect(() => {
       authService.onAuthStateChanged( async u => {
@@ -30,6 +31,9 @@ function App() {
       dbService.collection('current').doc('current').onSnapshot(data => {
         setCurrentInfo(data.data())
       });
+      dbService.collection('current').doc('goals').onSnapshot(data => {
+        setGoals(data.data())
+      });
     }, [])
     useEffect(() => {
       if(!docUserId)
@@ -48,7 +52,8 @@ function App() {
       user={user} 
       hasAccount={hasAccount} 
       doc_user_id={docUserId}
-      currentInfo={currentInfo} /> : "로딩중입니다!" }
+      currentInfo={currentInfo}
+      goals={goals} /> : "로딩중입니다!" }
       </>
   );
 }

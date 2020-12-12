@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import {Paper, Grid, Button, FormControl, Input, InputLabel, FormHelperText} from '@material-ui/core';
+import { Grid, Button, FormControl, Input, InputLabel } from '@material-ui/core';
 import { dbService } from '../fbase';
 
 const SubmitAnswer = ({no, user, doc_user_id}) => {
-    const {uid, name, tel} = user;
+    const {uid, name, tel, isAdmin} = user;
     const [answer, setAnswer] = useState('');
     const onInputChange = event => {
         const {target:{value}} = event;
@@ -18,10 +18,11 @@ const SubmitAnswer = ({no, user, doc_user_id}) => {
             uid,
             name,
             tel,
-            answer
+            answer,
+            isAdmin
         }
+        !isAdmin && alert('정답이 제출되었습니다.');
         await dbService.collection('quiz_'+no).add(answerObj);
-        alert('정답이 제출되었습니다.');
         await dbService.collection('userinfo').doc(doc_user_id).update({
             ['quiz_'+no]: true
         })

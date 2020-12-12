@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, InputLabel, Input, FormControl } from '@material-ui/core';
+import { Button, Input, FormControl } from '@material-ui/core';
 import { dbService } from '../fbase';
 
 
@@ -28,9 +28,11 @@ const ChangeAnswer = ({user, no}) => {
         toggleAnswerCorrectionMode();
     }
     useEffect(async () => {
-        const dbAns = (await dbService.collection('quiz_'+no).where('uid','==',user.uid).get()).docs[0].data().answer;
-        setMyAnswer(dbAns);
-        setNewAnswer(dbAns);
+        if(user['quiz_'+no]){
+            const dbAns = (await dbService.collection('quiz_'+no).where('uid','==',user.uid).get()).docs[0].data().answer;
+            setMyAnswer(dbAns);
+            setNewAnswer(dbAns);
+        }
     }, [])
 
     return (

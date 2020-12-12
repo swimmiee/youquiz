@@ -22,7 +22,6 @@ const Auth = () => {
             alert(`현재 브라우저에서는 지원하지 않는 서비스입니다. 화면에 보이는 주소를 복사하셔서 구글 Chrome나 Safari앱을 통해 접속해 주시기 바랍니다.`);
         setAvailable(avail);
     }, [])
-    
 
     const copyURL = () => {
         const tempElem = document.createElement('textarea');

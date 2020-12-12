@@ -6,7 +6,7 @@ import Home from "../routes/Home";
 import Draw from "../routes/Draw";
 import ShowResult from '../routes/ShowResult';
 
-const AppRouter = ({ isLoggedIn, user, hasAccount, doc_user_id, currentInfo }) => {
+const AppRouter = ({ isLoggedIn, user, hasAccount, doc_user_id, currentInfo, goals }) => {
     return (
         <Router>
             <Switch>
@@ -14,7 +14,7 @@ const AppRouter = ({ isLoggedIn, user, hasAccount, doc_user_id, currentInfo }) =
                 hasAccount ?
                 <>
                     <Route exact path="/">
-                        <Home user={user} doc_user_id={doc_user_id} currentInfo={currentInfo}/>
+                        <Home user={user} doc_user_id={doc_user_id} currentInfo={currentInfo} goals={goals}/>
                     </Route>
                     {
                         user.isAdmin && 

@@ -10,76 +10,103 @@ import { Grid, Button } from '@material-ui/core';
 import './css/Home.css';
 import ChangeAnswer from '../components/ChangeAnswer';
 import useSound from 'use-sound';
-import dingdong from '../sound/sound3.mp3';
+import sarr from '../sound/sarr.mp3';
+import babam from '../sound/babam.mp3';
+import dodongtak from '../sound/dodongtak.mp3';
 import quizs from '../quizs';
 
-const Home = ({user, doc_user_id, currentInfo}) => {
+const Home = ({user, doc_user_id, currentInfo, goals}) => {
     const {isAdmin} = user
-    const {currentQuiz, showAnswer, showWrongs, isStarted} = currentInfo;
+    const {currentQuiz, showAnswer, showScore, showWrongs, isStarted, users} = currentInfo;
+    const {score, goal} = goals;
     const [isSolved, setIsSolved] = useState(false);
     const [participants, setParticipants] = useState(0);
     const [corrects, setCorrects] = useState(0);
     const [wrongs, setWrongs] = useState([]);
-    const [play] = useSound(dingdong);
+    const [[playSarr], [playBabam], [playDodongtak]] = [useSound(sarr), useSound(babam), useSound(dodongtak)];
+    const isCorrectAnswer = (answer, correctAnswerArr) => correctAnswerArr.includes(answer.toLowerCase());
 
-    const setCurrentQuiz = ( idx ) => {
-        dbService.collection('current').doc('current').update({
-            currentQuiz: idx
-        })
-    }
     const setShowAnswer = (bool) => {
         dbService.collection('current').doc('current').update({
             showAnswer: bool
         })
     }
+    const setShowScore = async (bool) => {
+        if(isAdmin)
+            await updateScore();
+        dbService.collection('current').doc('current').update({
+            showScore: bool
+        })
+    }
     const onPrevQuizClicked = () => {
-        setCurrentQuiz( currentQuiz - 1 );
-        setShowAnswer(false);
         dbService.collection('current').doc('current').update({
+            currentQuiz: currentQuiz-1,
             showWrongs: false
         })
     }
-    const onNextQuizClicked = () => {
-        setCurrentQuiz( currentQuiz + 1);
-        setShowAnswer(false);
+    const onNextQuizClicked = async () => {
         dbService.collection('current').doc('current').update({
-            showWrongs: false
+            currentQuiz: currentQuiz+1,
+            showWrongs: false,
+            showAnswer: false,
+            showScore: false
+        })
+        playBabam();
+    }
+    const updateScore = async () => {
+        let sofarCorrectors = 0;
+        await Promise.all(
+            quizs.filter( q => q.no<=quizs[currentQuiz].no)
+                .map( async q => {
+                    const peopleAnswers = (await dbService.collection("quiz_"+q.no).get()).docs.map(doc => doc.data());
+                    sofarCorrectors+=peopleAnswers.reduce((sum, ansObj)=>{
+                        return isCorrectAnswer(ansObj.answer, q.answers) ?
+                            (ansObj.isAdmin ? sum+10 : sum+1)
+                        : sum
+                    }, 0)
+                })
+        )
+        dbService.collection('current').doc('goals').update({
+            score: sofarCorrectors
         })
     }
+
     const checkSolved = async () => {
-        if(!quizs.length)
-            return;
         setIsSolved(user['quiz_'+quizs[currentQuiz].no]);
     }
-    const isCorrectAnswer = (answer, correctAnswerArr) => correctAnswerArr.includes(answer.toLowerCase());
 
     useEffect( () => {
         checkSolved()
-    }, [quizs, currentQuiz, user])
-    useEffect( async () => {
+    }, [currentQuiz, user])
+
+    useEffect(() => {
         const {no, answers} = quizs[currentQuiz];
         dbService.collection("quiz_"+no).onSnapshot( snapshot => {
             const peopleAnswers = snapshot.docs.map( doc => doc.data() );
             setParticipants(peopleAnswers.length);
-            let c = [], w = [];
-            peopleAnswers.map( person => {
+            let c = 0, w = [];
+            peopleAnswers.forEach( person => {
                 isCorrectAnswer(person.answer, answers) ? 
-                      c = [...c, person]
+                      c++
                     : w = [...w, person]
             })
             setCorrects(c.length);
             setWrongs(w);
         })
     }, [currentQuiz])
+
     useEffect( () => {
-        showAnswer && play();
+        showAnswer && playSarr();
     }, [showAnswer])
+    useEffect( () => {
+        showScore && playDodongtak();
+    }, [showScore])
 
     return (
         <>
         {
         !isStarted ?
-            <Ready isAdmin={isAdmin}/>
+            <Ready isAdmin={isAdmin} users={users}/>
         :
         
         <Grid container direction="row" spacing={2} alignItems="stretch">
@@ -107,6 +134,14 @@ const Home = ({user, doc_user_id, currentInfo}) => {
                         <Grid item xs={6} md={3}>
                             {   
                                 showAnswer ? 
+                                    !showScore ?
+                                        <Button variant="contained" 
+                                            color="default" 
+                                            fullWidth 
+                                            onClick={()=>setShowScore(true)}>
+                                                점수 공개
+                                            </Button>
+                                    :
                                     ( currentQuiz+1<quizs.length ?
                                             <Button variant="contained" 
                                                 color="primary" fullWidth 
@@ -120,23 +155,26 @@ const Home = ({user, doc_user_id, currentInfo}) => {
                                                 </Button> 
                                             </Link>
                                         )
-                                : <Button variant="contained" 
-                                    color="secondary" 
-                                    fullWidth 
-                                    onClick={()=>setShowAnswer(true)}>
-                                        정답 공개
-                                    </Button>
+                                : 
+                                    <Button variant="contained" 
+                                        color="secondary" 
+                                        fullWidth 
+                                        onClick={()=>setShowAnswer(true)}>
+                                            정답 공개
+                                        </Button>
+                                
                             }
                         </Grid>
                         </>
                         :
-                        <Grid item xs={12} md={6}>
-                            <Link to="/showresult">
-                                <Button variant="contained" color="primary" fullWidth>
-                                    추첨 결과 확인
-                                </Button>
-                            </Link>
-                        </Grid>
+                        (currentQuiz+1)===quizs.length &&
+                            <Grid item xs={12} md={6}>
+                                <Link to="/showresult">
+                                    <Button variant="contained" color="primary" fullWidth>
+                                        추첨 결과 확인
+                                    </Button>
+                                </Link>
+                            </Grid>
                     }
                 </Grid>
 
@@ -150,8 +188,12 @@ const Home = ({user, doc_user_id, currentInfo}) => {
                         )}
                 </Grid>
                 <Grid item xs={12}>
-                    {quizs.length && 
-                        <Board participants={participants} corrects={corrects}/>}
+                    <Board 
+                        participants={participants}
+                        corrects={corrects}
+                        showAnswer={showAnswer}
+                        score={score}
+                        goal={goal} />
                 </Grid>
             </Grid>
             <Grid item xs={12} md={4}>

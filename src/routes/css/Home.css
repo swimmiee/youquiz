@@ -10,6 +10,12 @@
     align-items: center;
     justify-content: center;
 }
+#ready .users{
+    text-align: right;
+    position: absolute;
+    top:50px;
+    right: 50px;
+}
 #ready img{
     width: 80%;
     margin: 0 10% 10% 10%;
@@ -179,18 +185,98 @@
 }
 #board{
     background-image: linear-gradient(to right bottom, #ffd0d0, #eeffee);
-    display: table;
-    height: 70px;
     width: 100%;
-    text-align: center;
+    display: grid;
+}
+#board *{
+    font-family: 'BlackHanSans';
 }
 
-#board h4{
-    display: table-cell;
-    vertical-align: middle;
+#board > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#board .cumulative{
+    padding: 5px;
 }
 
-#board h4 span{
+.gauge {
+    width: 100%;
+    font-size: 20px;
+    color: #004033;
+  }
+  @media(max-width:480px){
+    #board{
+        grid-template-columns: auto 80px;
+        font-size: 24px;
+    }
+    .gauge{
+        height: 40px;
+        max-width: 80px;
+        font-size: 20px;
+    }
+  }
+  @media(min-width:480px){
+    #board{
+        grid-template-columns: auto 120px;
+        font-size: 26px;
+    }
+    .gauge{
+        height: 60px;
+        max-width: 120px;
+        font-size: 26px;
+    }
+  }
+  @media(min-width:1080px){
+    #board{
+        grid-template-columns: auto 180px;
+        font-size: 32px;
+    }
+    .gauge{
+      height: 90px;
+      max-width: 180px;
+      font-size: 32px;
+    }
+}
+  
+  .gauge__body {
+    width: 100%;
+    height: 0;
+    padding-bottom: 50%;
+    background: #e3fce9;
     position: relative;
-    top: -6px;
-}
+    border-top-left-radius: 100% 200%;
+    border-top-right-radius: 100% 200%;
+    overflow: hidden;
+  }
+  
+  .gauge__fill {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: inherit;
+    height: 100%;
+    transform-origin: center top;
+    transform: rotate(0.25turn);
+    transition: transform 0.2s ease-out;
+  }
+  
+  .gauge__cover {
+    width: 75%;
+    height: 150%;
+    background-color:#fff7f0;
+    border-radius: 50%;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+  
+    /* Text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 25%;
+    box-sizing: border-box;
+  }
+  
