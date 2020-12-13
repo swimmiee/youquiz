@@ -15,7 +15,7 @@ const Wrongs = ({wrongs, isAdmin, showWrongs}) => {
             <Grid container direction="column" spacing={1}>
                 <Grid item container direction="row">
                     <Grid item xs={6}>
-                        <h3>오답 {wrongs.length} </h3>
+                        <h3>오답 </h3>
                     </Grid>
                     {isAdmin && <Grid item xs={6}>
                         <FormGroup>

@@ -4,16 +4,13 @@ import { IoPersonSharp, IoPlaySharp } from 'react-icons/io5';
 import qrcode from '../img/qrcode.png';
 import logo from '../img/logo.png';
 import { dbService } from '../fbase';
-import useSound from 'use-sound';
-import jing from '../sound/jing.mp3';
 
 const Ready = ({isAdmin, users}) => {
-    const [playJing] = useSound(jing)
     const onStartQuizClicked = () => {
-        playJing();
         dbService.collection('current').doc('current').update({
             currentQuiz: 0,
             isStarted: true,
+            showScore: false,
             showAnswer: false,
             showWrongs: false
         })

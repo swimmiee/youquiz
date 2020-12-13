@@ -30,6 +30,7 @@ const Home = ({user, doc_user_id, currentInfo, goals}) => {
         dbService.collection('current').doc('current').update({
             showAnswer: bool
         })
+        playSarr();
     }
     const setShowScore = async (bool) => {
         if(isAdmin)
@@ -37,6 +38,7 @@ const Home = ({user, doc_user_id, currentInfo, goals}) => {
         dbService.collection('current').doc('current').update({
             showScore: bool
         })
+        playDodongtak();
     }
     const onPrevQuizClicked = () => {
         dbService.collection('current').doc('current').update({
@@ -50,7 +52,7 @@ const Home = ({user, doc_user_id, currentInfo, goals}) => {
             showWrongs: false,
             showAnswer: false,
             showScore: false
-        })
+        });
         playBabam();
     }
     const updateScore = async () => {
@@ -94,13 +96,6 @@ const Home = ({user, doc_user_id, currentInfo, goals}) => {
             setWrongs(w);
         })
     }, [currentQuiz])
-
-    useEffect( () => {
-        showAnswer && playSarr();
-    }, [showAnswer])
-    useEffect( () => {
-        showScore && playDodongtak();
-    }, [showScore])
 
     return (
         <>

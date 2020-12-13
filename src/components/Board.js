@@ -43,7 +43,7 @@ const Board = ({participants, corrects, showAnswer, score, goal}) => {
                 { participants ?
                     <><IoCheckmarkCircleSharp size="32"/>&nbsp; {participants}분 참여하셨습니다!</>
                     :
-                    <><IoLogoOctocat size="32"/>&nbsp; 아직 참여하신 분이 없습니다. 제일 먼저 퀴즈를 풀어보세요! </>
+                    <><IoLogoOctocat size="32"/>&nbsp; 퀴즈를 풀어주세요! </>
                 }
                 
             </div>
